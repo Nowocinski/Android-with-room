@@ -29,10 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.viewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         this.viewModel.getAllNotes().observe(this, notes -> {
-            // update RecycleView
             adapter.setNotes(notes);
-
-            Toast.makeText(MainActivity.this, "onChange", Toast.LENGTH_LONG).show();
         });
     }
 }
