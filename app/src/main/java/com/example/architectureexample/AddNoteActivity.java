@@ -60,7 +60,6 @@ public class AddNoteActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.add_note_menu, menu);
         return true;
-        //return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class AddNoteActivity extends AppCompatActivity {
                 saveNote();
                 return true;
             default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 }
