@@ -85,6 +85,20 @@ public class MainActivity extends AppCompatActivity {
 
                                 Toast.makeText(this, "Note save", Toast.LENGTH_SHORT).show();
                                 break;
+                            case EDIT_NOTE_REQUEST:
+                                int id = intent.getIntExtra(AddEditNoteActivity.EXTRA_ID, -1);
+                                if (id == -1) {
+                                    Toast.makeText(this, "Note can't be update", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                title = intent.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
+                                description = intent.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
+                                priority = intent.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1);
+                                note = new Note(title, description, priority);
+                                note.setId(id);
+                                viewModel.update(note);
+                                Toast.makeText(this, "Note updated", Toast.LENGTH_SHORT).show();
+
                             default:
                                 // ...
                         }
@@ -102,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddEditNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
                 intent.putExtra(AddEditNoteActivity.EXTRA_PRIORITY, note.getPriority());
                 intent.putExtra(MainActivity.REQUEST_CODE, MainActivity.EDIT_NOTE_REQUEST);
-                startActivity(intent);
+                intentLaunch.launch(intent);
             }
         });
     }

@@ -1,8 +1,5 @@
 package com.example.architectureexample;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +8,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AddEditNoteActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "com.example.architectureexample.EXTRA_ID";
@@ -60,7 +60,15 @@ public class AddEditNoteActivity extends AppCompatActivity {
         data.putExtra(this.EXTRA_TITLE, title);
         data.putExtra(this.EXTRA_DESCRIPTION, description);
         data.putExtra(this.EXTRA_PRIORITY, priority);
-        data.putExtra(MainActivity.REQUEST_CODE, MainActivity.ADD_NOTE_REQUEST);
+        if (this.getIntent().getStringExtra(MainActivity.REQUEST_CODE).equals(MainActivity.EDIT_NOTE_REQUEST)) {
+            data.putExtra(MainActivity.REQUEST_CODE, MainActivity.EDIT_NOTE_REQUEST);
+        } else {
+            data.putExtra(MainActivity.REQUEST_CODE, MainActivity.ADD_NOTE_REQUEST);
+        }
+        int id = getIntent().getIntExtra(AddEditNoteActivity.EXTRA_ID, -1);
+        if (id != -1) {
+            data.putExtra(AddEditNoteActivity.EXTRA_ID, id);
+        }
         setResult(RESULT_OK, data);
         finish();
     }
