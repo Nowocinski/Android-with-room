@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddEditNoteActivity extends AppCompatActivity {
+    public static final String EXTRA_ID = "com.example.architectureexample.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.example.architectureexample.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.example.architectureexample.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRIORITY = "com.example.architectureexample.EXTRA_PRIORITY";
@@ -33,7 +34,16 @@ public class AddNoteActivity extends AppCompatActivity {
         this.numberPickerPriority.setMaxValue(10);
 
         this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        this.setTitle("Add note");
+
+        Intent intent = this.getIntent();
+        if (intent != null && intent.hasExtra(this.EXTRA_ID)) {
+            this.setTitle("Edit note");
+            this.editTextTitle.setText(intent.getStringExtra(AddEditNoteActivity.EXTRA_TITLE));
+            this.editTextDescription.setText(intent.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION));
+            this.numberPickerPriority.setValue(intent.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1));
+        } else {
+            this.setTitle("Add note");
+        }
     }
 
     private void saveNote() {
