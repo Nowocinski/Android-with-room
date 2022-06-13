@@ -3,6 +3,7 @@ package com.example.architectureexample;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -91,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(this, "Note not save", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        this.adapter.setOnItemClickedListener(new NoteAdapter.IOnItemClickedListener() {
+            @Override
+            public void onItemClicked(Note note) {
+                Log.d("LOG_KEY@"+this.getClass().getSimpleName(), note.getTitle());
+            }
+        });
     }
 
     @Override

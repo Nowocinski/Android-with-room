@@ -13,6 +13,7 @@ import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private List<Note> notes = new ArrayList<>();
+    private IOnItemClickedListener listener;
     @NonNull
     @Override
     public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -68,6 +69,23 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             this.textViewTitle = itemView.findViewById(R.id.text_view_title);
             this.textViewDescription = itemView.findViewById(R.id.text_view_description);
             this.textViewPriority = itemView.findViewById(R.id.text_view_priority);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getBindingAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClicked(notes.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface IOnItemClickedListener {
+        void onItemClicked(Note note);
+    }
+
+    public void setOnItemClickedListener(IOnItemClickedListener listener) {
+        this.listener = listener;
     }
 }
